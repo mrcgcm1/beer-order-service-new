@@ -3,6 +3,7 @@ package com.marco.beerorderservicenew.web.mappers;
 import com.marco.beerorderservicenew.domain.BeerOrderLine;
 import com.marco.beerorderservicenew.service.beer.BeerService;
 import com.marco.beerorderservicenew.web.model.BeerOrderLineDto;
+import com.marco.dtocommoninterface.model.BeerDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 

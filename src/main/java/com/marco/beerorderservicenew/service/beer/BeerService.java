@@ -1,6 +1,6 @@
 package com.marco.beerorderservicenew.service.beer;
 
-import com.marco.ultimabreweryservice.model.BeerDto;
+import com.marco.dtocommoninterface.model.BeerDto;
 
 import java.util.Optional;
 import java.util.UUID;

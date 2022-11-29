@@ -19,7 +19,6 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
         <org.lombok.version>1.18.24</org.lombok.version>
-
         <jaxb.version>2.3.0</jaxb.version>
     </properties>
     <dependencies>
@@ -93,11 +92,12 @@
             <version>1.6.9</version>
         </dependency>
         <!--  Fine Open api    -->
-        <!--      <dependency>
+        <!--  Interfaccia pre la condifvisione delle informazioni   -->
+        <dependency>
                   <groupId>com.marco</groupId>
-                  <artifactId>ultima-brewery-service</artifactId>
+                  <artifactId>dto-common-interface</artifactId>
                   <version>0.0.1-SNAPSHOT</version>
-              </dependency>-->
+              </dependency>
     </dependencies>
 
     <build>

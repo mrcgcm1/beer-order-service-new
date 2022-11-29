@@ -9,13 +9,10 @@ import com.marco.beerorderservicenew.web.mappers.BeerOrderMapper;
 import com.marco.beerorderservicenew.web.model.BeerOrderDto;
 import com.marco.beerorderservicenew.web.model.BeerOrderLineDto;
 import com.marco.beerorderservicenew.web.model.BeerOrderPagedList;
-import com.marco.ultimabreweryservice.model.BeerDto;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -28,17 +25,14 @@ public class BeerOrderServiceImpl implements BeerOrderService {
     private final CustomerRepository customerRepository;
     private final BeerOrderMapper beerOrderMapper;
     private final ApplicationEventPublisher publisher;
-    private final RestTemplate restTemplate;
 
     public BeerOrderServiceImpl(BeerOrderRepository beerOrderRepository,
                                 CustomerRepository customerRepository,
-                                BeerOrderMapper beerOrderMapper, ApplicationEventPublisher publisher,
-                                RestTemplateBuilder builder) {
+                                BeerOrderMapper beerOrderMapper, ApplicationEventPublisher publisher) {
         this.beerOrderRepository = beerOrderRepository;
         this.customerRepository = customerRepository;
         this.beerOrderMapper = beerOrderMapper;
         this.publisher = publisher;
-        this.restTemplate = builder.build();
     }
 
     @Override
@@ -61,7 +55,6 @@ public class BeerOrderServiceImpl implements BeerOrderService {
             // TODO
             beerOrder.getBeerOrderLines().forEach(line -> {
 
-                restTemplate.getForObject("", BeerDto.class);
                 line.setBeerOrder(beerOrder);
             });
 

@@ -1,14 +1,13 @@
 package com.marco.beerorderservicenew.service.beer;
 
-import com.marco.ultimabreweryservice.model.BeerDto;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import com.marco.dtocommoninterface.model.BeerDto;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Optional;
 import java.util.UUID;
 
-@ConfigurationProperties(prefix = "sfg.brewery", ignoreUnknownFields = false)
+//@ConfigurationProperties(prefix = "sfg.brewery", ignoreUnknownFields = false)
 public class BeerServiceImpl implements BeerService {
     public final static String BEER_PATH_V1 = "/api/v1/beer/";
     public final static String BEER_UPC_PATH_V1 = "/api/v1/beerUpc/";
