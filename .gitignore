@@ -5,6 +5,7 @@ target/
 !**/src/test/**/target/
 .attach*
 .attach_pid*
+.attach_pi*
 ### STS ###
 .apt_generated
 .classpath
