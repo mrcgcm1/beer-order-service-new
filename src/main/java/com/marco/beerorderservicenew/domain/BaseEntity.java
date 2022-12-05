@@ -18,12 +18,12 @@ import java.util.UUID;
 @MappedSuperclass
 public class BaseEntity {
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
-    )
-    @Type(type = "org.hibernate.type.UUIDCharType")
+    @GeneratedValue(generator = "UUID",strategy = GenerationType.AUTO)
+//    @GenericGenerator(
+//            name = "UUID",
+//            strategy = "org.hibernate.id.UUIDGenerator"
+//    )
+    @Type(type = "uuid-char")
     @Column(length = 36, columnDefinition = "varchar", updatable = false, nullable = false)
     private UUID id;
 
