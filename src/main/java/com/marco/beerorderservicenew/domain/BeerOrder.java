@@ -18,6 +18,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 public class BeerOrder extends BaseEntity {
 
     private String customerRef;
@@ -30,9 +31,6 @@ public class BeerOrder extends BaseEntity {
 
     private OrderStatusEnum orderStatus = OrderStatusEnum.NEW;
     private String orderStatusCallbackUrl;
-
-    public BeerOrder() {
-    }
 
     @Builder
     public BeerOrder(UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate, String customerRef, Customer customer,
