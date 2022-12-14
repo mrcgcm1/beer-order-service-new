@@ -2,7 +2,7 @@ package com.marco.beerorderservicenew.service;
 
 import com.marco.beerorderservicenew.domain.BeerOrder;
 import com.marco.beerorderservicenew.domain.Customer;
-import com.marco.beerorderservicenew.domain.OrderStatusEnum;
+import com.marco.beerorderservicenew.domain.BeerOrderStatusEnum;
 import com.marco.beerorderservicenew.repositories.BeerOrderRepository;
 import com.marco.beerorderservicenew.repositories.CustomerRepository;
 import com.marco.beerorderservicenew.web.mappers.BeerOrderMapper;
@@ -50,7 +50,7 @@ public class BeerOrderServiceImpl implements BeerOrderService {
             BeerOrder beerOrder = beerOrderMapper.dtoToBeerOrder(beerOrderDto);
             beerOrder.setId(null); //should not be set by outside client
             beerOrder.setCustomer(customerOptional.get());
-            beerOrder.setOrderStatus(OrderStatusEnum.NEW);
+            beerOrder.setOrderStatus(BeerOrderStatusEnum.NEW);
 
             // TODO
             beerOrder.getBeerOrderLines().forEach(line -> {
@@ -84,7 +84,7 @@ public class BeerOrderServiceImpl implements BeerOrderService {
     @Override
     public void pickupOrder(UUID customerId, UUID orderId) {
         BeerOrder beerOrder = getOrder(customerId, orderId);
-        beerOrder.setOrderStatus(OrderStatusEnum.PICKED_UP);
+        beerOrder.setOrderStatus(BeerOrderStatusEnum.PICKED_UP);
 
         beerOrderRepository.save(beerOrder);
     }
