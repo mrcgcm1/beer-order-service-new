@@ -5,7 +5,7 @@
     <parent>
         <artifactId>beer-service-bom-new</artifactId>
         <groupId>com.marco</groupId>
-        <version>1.0-3</version>
+        <version>1.0.4</version>
     </parent>
 
     <groupId>com.marco</groupId>
