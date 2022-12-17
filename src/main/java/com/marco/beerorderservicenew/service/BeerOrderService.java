@@ -1,5 +1,8 @@
 package com.marco.beerorderservicenew.service;
 
+import com.marco.dtocommoninterface.model.order.BeerOrderDto;
+import com.marco.dtocommoninterface.model.order.BeerOrderLineDto;
+import com.marco.dtocommoninterface.model.order.BeerOrderPagedList;
 import org.springframework.data.domain.Pageable;
 
 import java.util.UUID;

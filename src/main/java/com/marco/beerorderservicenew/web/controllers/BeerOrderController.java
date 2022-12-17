@@ -1,6 +1,8 @@
 package com.marco.beerorderservicenew.web.controllers;
 
 import com.marco.beerorderservicenew.service.BeerOrderService;
+import com.marco.dtocommoninterface.model.order.BeerOrderDto;
+import com.marco.dtocommoninterface.model.order.BeerOrderPagedList;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

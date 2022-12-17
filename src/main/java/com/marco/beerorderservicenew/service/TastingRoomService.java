@@ -4,6 +4,8 @@ import com.marco.beerorderservicenew.bootstrap.BeerOrderBootStrap;
 import com.marco.beerorderservicenew.domain.Customer;
 import com.marco.beerorderservicenew.repositories.BeerOrderRepository;
 import com.marco.beerorderservicenew.repositories.CustomerRepository;
+import com.marco.dtocommoninterface.model.order.BeerOrderDto;
+import com.marco.dtocommoninterface.model.order.BeerOrderLineDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;

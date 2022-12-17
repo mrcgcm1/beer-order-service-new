@@ -1,11 +1,15 @@
-package com.marco.beerorderservicenew.service;
+package com.marco.beerorderservicenew.service.impl;
 
 import com.marco.beerorderservicenew.domain.BeerOrder;
-import com.marco.beerorderservicenew.domain.Customer;
 import com.marco.beerorderservicenew.domain.BeerOrderStatusEnum;
+import com.marco.beerorderservicenew.domain.Customer;
 import com.marco.beerorderservicenew.repositories.BeerOrderRepository;
 import com.marco.beerorderservicenew.repositories.CustomerRepository;
+import com.marco.beerorderservicenew.service.BeerOrderService;
 import com.marco.beerorderservicenew.web.mappers.BeerOrderMapper;
+import com.marco.dtocommoninterface.model.order.BeerOrderDto;
+import com.marco.dtocommoninterface.model.order.BeerOrderLineDto;
+import com.marco.dtocommoninterface.model.order.BeerOrderPagedList;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +21,6 @@ import java.util.UUID;
 @Slf4j
 @Service
 public class BeerOrderServiceImpl implements BeerOrderService {
-
     private final BeerOrderRepository beerOrderRepository;
     private final CustomerRepository customerRepository;
     private final BeerOrderMapper beerOrderMapper;
