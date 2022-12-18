@@ -2,8 +2,8 @@ package com.marco.beerorderservicenew.sender;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.marco.beerorderservicenew.config.JmsConfig;
-import com.marco.beerorderservicenew.model.ValidateBeerOrderRequest;
+import com.marco.dtocommoninterface.model.order.ValidateBeerOrderRequest;
+import com.marco.dtocommoninterface.config.JmsConfig;
 import com.marco.dtocommoninterface.model.order.BeerOrderDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jms.core.JmsTemplate;

@@ -2,6 +2,7 @@ package com.marco.beerorderservicenew.sm;
 
 import com.marco.beerorderservicenew.domain.BeerOrderEventEnum;
 import com.marco.beerorderservicenew.domain.BeerOrderStatusEnum;
+import com.marco.beerorderservicenew.sm.actions.AlllocateOrderAction;
 import com.marco.beerorderservicenew.sm.actions.ValidateOrderAction;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,7 @@ import java.util.EnumSet;
 public class BeerOrderStateMachineConfig extends StateMachineConfigurerAdapter<BeerOrderStatusEnum, BeerOrderEventEnum> {
 
     private final ValidateOrderAction validateOrderAction;
+    private final AlllocateOrderAction allocateOrderAction;
 
     @Override
     public void configure(StateMachineStateConfigurer<BeerOrderStatusEnum, BeerOrderEventEnum> states) throws Exception {
@@ -43,6 +45,10 @@ public class BeerOrderStateMachineConfig extends StateMachineConfigurerAdapter<B
                 .withExternal().source(BeerOrderStatusEnum.NEW).target(BeerOrderStatusEnum.VALIDATED)
                 .event(BeerOrderEventEnum.VALIDATION_PASSED)
                 .and()
-                .withExternal().source(BeerOrderStatusEnum.NEW).target(BeerOrderStatusEnum.VALIDATED_EXCEPTION).event(BeerOrderEventEnum.VALIDATION_FAILED);
+                .withExternal().source(BeerOrderStatusEnum.NEW).target(BeerOrderStatusEnum.VALIDATED_EXCEPTION)
+                .event(BeerOrderEventEnum.VALIDATION_FAILED)
+                .and()
+                .withExternal().source(BeerOrderStatusEnum.VALIDATED).target(BeerOrderStatusEnum.ALLOCATION_PENDING)
+                .event(BeerOrderEventEnum.ALLOCATE_ORDER).action(allocateOrderAction);
     }
 }
