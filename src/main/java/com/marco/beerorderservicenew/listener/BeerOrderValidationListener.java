@@ -2,12 +2,10 @@ package com.marco.beerorderservicenew.listener;
 
 import com.marco.beerorderservicenew.service.BeerOrderManager;
 import com.marco.dtocommoninterface.config.JmsConfig;
-import com.marco.dtocommoninterface.model.order.ValidateBeerOrderRequest;
 import com.marco.dtocommoninterface.model.order.ValidateBeerOrderResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.annotation.JmsListener;
-import org.springframework.jms.core.JmsTemplate;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.handler.annotation.Headers;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -19,18 +17,9 @@ import javax.jms.Message;
 @RequiredArgsConstructor
 @Component
 public class BeerOrderValidationListener {
-    private final JmsTemplate jmsTemplate;
 
     private final BeerOrderManager beerOrderManager;
 
-    @JmsListener(destination = JmsConfig.VALIDATE_ORDER_QUEUE)
-    public void listen(@Payload ValidateBeerOrderRequest helloMessage, @Headers MessageHeaders headers, Message message) {
-
-        System.out.println("Ricevuto il messaggio");
-
-        System.out.println(helloMessage);
-
-    }
 
     @JmsListener(destination = JmsConfig.VALIDATE_ORDER_QUEUE_RESULT)
     public void listenForHello(@Payload ValidateBeerOrderResponse response, @Headers MessageHeaders headers, Message message) throws JMSException {

@@ -2,7 +2,9 @@ package com.marco.beerorderservicenew.sm;
 
 import com.marco.beerorderservicenew.domain.BeerOrderEventEnum;
 import com.marco.beerorderservicenew.domain.BeerOrderStatusEnum;
-import com.marco.beerorderservicenew.sm.actions.AlllocateOrderAction;
+import com.marco.beerorderservicenew.sm.actions.AllocationOrderAction;
+import com.marco.beerorderservicenew.sm.actions.AllocationFailureAction;
+import com.marco.beerorderservicenew.sm.actions.DeallocationOrderAction;
 import com.marco.beerorderservicenew.sm.actions.ValidateOrderAction;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +23,9 @@ import java.util.EnumSet;
 public class BeerOrderStateMachineConfig extends StateMachineConfigurerAdapter<BeerOrderStatusEnum, BeerOrderEventEnum> {
 
     private final ValidateOrderAction validateOrderAction;
-    private final AlllocateOrderAction allocateOrderAction;
+    private final AllocationOrderAction allocateOrderAction;
+    private final AllocationFailureAction allocationFailureAction;
+    private final DeallocationOrderAction deallocateOrderAction;
 
     @Override
     public void configure(StateMachineStateConfigurer<BeerOrderStatusEnum, BeerOrderEventEnum> states) throws Exception {
@@ -42,13 +46,41 @@ public class BeerOrderStateMachineConfig extends StateMachineConfigurerAdapter<B
                 .event(BeerOrderEventEnum.VALIDATE_ORDER)
                 .action(validateOrderAction)
                 .and()
-                .withExternal().source(BeerOrderStatusEnum.NEW).target(BeerOrderStatusEnum.VALIDATED)
+                .withExternal().source(BeerOrderStatusEnum.VALIDATION_PENDING).target(BeerOrderStatusEnum.VALIDATED)
                 .event(BeerOrderEventEnum.VALIDATION_PASSED)
+                .and().withExternal()
+                .source(BeerOrderStatusEnum.VALIDATION_PENDING).target(BeerOrderStatusEnum.CANCELLED)
+                .event(BeerOrderEventEnum.CANCEL_ORDER)
                 .and()
-                .withExternal().source(BeerOrderStatusEnum.NEW).target(BeerOrderStatusEnum.VALIDATED_EXCEPTION)
+                .withExternal().source(BeerOrderStatusEnum.VALIDATION_PENDING).target(BeerOrderStatusEnum.VALIDATED_EXCEPTION)
                 .event(BeerOrderEventEnum.VALIDATION_FAILED)
                 .and()
                 .withExternal().source(BeerOrderStatusEnum.VALIDATED).target(BeerOrderStatusEnum.ALLOCATION_PENDING)
-                .event(BeerOrderEventEnum.ALLOCATE_ORDER).action(allocateOrderAction);
+                .event(BeerOrderEventEnum.ALLOCATE_ORDER).action(allocateOrderAction)
+                .and()
+                .withExternal()
+                .source(BeerOrderStatusEnum.VALIDATED).target(BeerOrderStatusEnum.CANCELLED)
+                .event(BeerOrderEventEnum.CANCEL_ORDER)
+                .and()
+                .withExternal().source(BeerOrderStatusEnum.ALLOCATION_PENDING).target(BeerOrderStatusEnum.ALLOCATED)
+                .event(BeerOrderEventEnum.ALLOCATION_SUCCESS)
+                .and()
+                .withExternal().source(BeerOrderStatusEnum.ALLOCATION_PENDING).target(BeerOrderStatusEnum.ALLOCATED_EXCEPTION)
+                .event(BeerOrderEventEnum.ALLOCATION_FAILED).action(allocationFailureAction)
+                .and().withExternal()
+                .source(BeerOrderStatusEnum.ALLOCATION_PENDING).target(BeerOrderStatusEnum.CANCELLED)
+                .event(BeerOrderEventEnum.CANCEL_ORDER)
+                .and()
+                .withExternal().source(BeerOrderStatusEnum.ALLOCATION_PENDING).target(BeerOrderStatusEnum.PENDING_INVENTORY)
+                .event(BeerOrderEventEnum.ALLOCATION_NO_INVENTORY)
+                .and()
+                .withExternal().source(BeerOrderStatusEnum.ALLOCATED).target(BeerOrderStatusEnum.PICKED_UP)
+                .event(BeerOrderEventEnum.BEER_ORDER_PICKED_UP)
+                .and().withExternal()
+                .source(BeerOrderStatusEnum.ALLOCATED).target(BeerOrderStatusEnum.CANCELLED)
+                .event(BeerOrderEventEnum.CANCEL_ORDER)
+                .action(deallocateOrderAction);
+        ;
+
     }
 }
