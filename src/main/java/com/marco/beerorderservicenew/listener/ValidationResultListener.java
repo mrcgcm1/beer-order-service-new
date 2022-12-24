@@ -2,7 +2,7 @@ package com.marco.beerorderservicenew.listener;
 
 import com.marco.beerorderservicenew.service.BeerOrderManager;
 import com.marco.dtocommoninterface.config.JmsConfig;
-import com.marco.dtocommoninterface.model.order.ValidateBeerOrderResponse;
+import com.marco.dtocommoninterface.model.order.ValidateOrderResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.annotation.JmsListener;
@@ -13,20 +13,23 @@ import org.springframework.stereotype.Component;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
+import java.util.UUID;
+
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class BeerOrderValidationListener {
+public class ValidationResultListener {
 
     private final BeerOrderManager beerOrderManager;
 
 
-    @JmsListener(destination = JmsConfig.VALIDATE_ORDER_QUEUE_RESULT)
-    public void listenForHello(@Payload ValidateBeerOrderResponse response, @Headers MessageHeaders headers, Message message) throws JMSException {
+    @JmsListener(destination = JmsConfig.VALIDATE_ORDER_RESPONSE_QUEUE)
+    public void listen(@Payload ValidateOrderResult result, @Headers MessageHeaders headers, Message message) throws JMSException {
+        final UUID beerOrderId = result.getOrderId();
 
-        System.out.println("Ricevuto il messaggio dalla coda " + JmsConfig.VALIDATE_ORDER_QUEUE);
+        System.out.println("Risultato della validazione  per Order id " + beerOrderId);
 
-        beerOrderManager.processValidationResult(response.getOrderId(), response.isResult());
+        beerOrderManager.processValidationResult(result.getOrderId(), result.isValid());
 
     }
 

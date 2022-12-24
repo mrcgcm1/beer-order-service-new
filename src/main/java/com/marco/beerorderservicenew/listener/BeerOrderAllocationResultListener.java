@@ -2,7 +2,7 @@ package com.marco.beerorderservicenew.listener;
 
 import com.marco.beerorderservicenew.service.BeerOrderManager;
 import com.marco.dtocommoninterface.config.JmsConfig;
-import com.marco.dtocommoninterface.model.order.AllocateOrderResponse;
+import com.marco.dtocommoninterface.model.order.AllocateOrderResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.annotation.JmsListener;
@@ -15,8 +15,8 @@ public class BeerOrderAllocationResultListener {
 
     private final BeerOrderManager beerOrderManager;
 
-    @JmsListener(destination = JmsConfig.VALIDATE_ORDER_QUEUE_RESULT)
-    public void listen(AllocateOrderResponse result){
+    @JmsListener(destination = JmsConfig.ALLOCATE_ORDER_RESPONSE_QUEUE)
+    public void listen(AllocateOrderResult result){
         if(!result.getAllocationError() && !result.getPendingInventory()){
             //allocated normally
             beerOrderManager.beerOrderAllocationPassed(result.getBeerOrderDto());

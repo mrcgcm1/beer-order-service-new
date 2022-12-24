@@ -7,7 +7,7 @@ import com.marco.beerorderservicenew.repositories.BeerOrderRepository;
 import com.marco.beerorderservicenew.service.impl.BeerOrderManagerImpl;
 import com.marco.beerorderservicenew.web.mappers.BeerOrderMapper;
 import com.marco.dtocommoninterface.config.JmsConfig;
-import com.marco.dtocommoninterface.model.order.ValidateBeerOrderRequest;
+import com.marco.dtocommoninterface.model.order.ValidateOrderRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.core.JmsTemplate;
@@ -34,9 +34,10 @@ public class ValidateOrderAction implements Action<BeerOrderStatusEnum, BeerOrde
         Optional<BeerOrder> beerOrderOptional = beerOrderRepository.findById(UUID.fromString(beerOrderId));
 
         beerOrderOptional.ifPresentOrElse(beerOrder -> {
-            jmsTemplate.convertAndSend(JmsConfig.VALIDATE_ORDER_QUEUE, ValidateBeerOrderRequest.builder()
-                    .beerOrderDto(beerOrderMapper.beerOrderToDto(beerOrder))
-                    .build());
+            ValidateOrderRequest orderRequest = ValidateOrderRequest.builder()
+                    .beerOrder(beerOrderMapper.beerOrderToDto(beerOrder))
+                    .build();
+            jmsTemplate.convertAndSend(JmsConfig.VALIDATE_ORDER_QUEUE, orderRequest);
         }, () -> {
             log.error("Order Not Found. Id: " + beerOrderId);
         });

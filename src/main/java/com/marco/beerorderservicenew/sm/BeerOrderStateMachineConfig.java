@@ -8,6 +8,7 @@ import com.marco.beerorderservicenew.sm.actions.DeallocationOrderAction;
 import com.marco.beerorderservicenew.sm.actions.ValidateOrderAction;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.statemachine.action.Action;
 import org.springframework.statemachine.config.EnableStateMachineFactory;
 import org.springframework.statemachine.config.StateMachineConfigurerAdapter;
 import org.springframework.statemachine.config.builders.StateMachineStateConfigurer;
@@ -26,6 +27,8 @@ public class BeerOrderStateMachineConfig extends StateMachineConfigurerAdapter<B
     private final AllocationOrderAction allocateOrderAction;
     private final AllocationFailureAction allocationFailureAction;
     private final DeallocationOrderAction deallocateOrderAction;
+
+    private final Action<BeerOrderStatusEnum, BeerOrderEventEnum> validationFailureAction;
 
     @Override
     public void configure(StateMachineStateConfigurer<BeerOrderStatusEnum, BeerOrderEventEnum> states) throws Exception {
@@ -53,7 +56,7 @@ public class BeerOrderStateMachineConfig extends StateMachineConfigurerAdapter<B
                 .event(BeerOrderEventEnum.CANCEL_ORDER)
                 .and()
                 .withExternal().source(BeerOrderStatusEnum.VALIDATION_PENDING).target(BeerOrderStatusEnum.VALIDATED_EXCEPTION)
-                .event(BeerOrderEventEnum.VALIDATION_FAILED)
+                .event(BeerOrderEventEnum.VALIDATION_FAILED).action(validationFailureAction)
                 .and()
                 .withExternal().source(BeerOrderStatusEnum.VALIDATED).target(BeerOrderStatusEnum.ALLOCATION_PENDING)
                 .event(BeerOrderEventEnum.ALLOCATE_ORDER).action(allocateOrderAction)
@@ -80,7 +83,6 @@ public class BeerOrderStateMachineConfig extends StateMachineConfigurerAdapter<B
                 .source(BeerOrderStatusEnum.ALLOCATED).target(BeerOrderStatusEnum.CANCELLED)
                 .event(BeerOrderEventEnum.CANCEL_ORDER)
                 .action(deallocateOrderAction);
-        ;
 
     }
 }
