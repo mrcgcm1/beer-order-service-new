@@ -37,6 +37,7 @@ public class BeerOrderStateMachineConfig extends StateMachineConfigurerAdapter<B
                 .states(EnumSet.allOf(BeerOrderStatusEnum.class))
                 .end(BeerOrderStatusEnum.PICKED_UP)
                 .end(BeerOrderStatusEnum.DELIVERED)
+                .end(BeerOrderStatusEnum.CANCELLED)
                 .end(BeerOrderStatusEnum.DELIVERY_EXCEPTION)
                 .end(BeerOrderStatusEnum.VALIDATED_EXCEPTION)
                 .end(BeerOrderStatusEnum.ALLOCATED_EXCEPTION);
