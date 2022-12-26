@@ -7,6 +7,7 @@ import com.marco.beerorderservicenew.repositories.CustomerRepository;
 import com.marco.dtocommoninterface.model.order.BeerOrderDto;
 import com.marco.dtocommoninterface.model.order.BeerOrderLineDto;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,7 +37,7 @@ public class TastingRoomServiceImpl implements TastingRoomService {
     }
 
     @Transactional
- //   @Scheduled(fixedRate = 2000) //run every 2 seconds
+    @Scheduled(fixedRate = 2000) //run every 2 seconds
     @Override
     public void placeTastingRoomOrder() {
 
