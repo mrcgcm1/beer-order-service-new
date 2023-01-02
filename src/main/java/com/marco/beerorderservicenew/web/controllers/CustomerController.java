@@ -20,7 +20,7 @@ public class CustomerController {
 
     private static final Integer DEFAULT_PAGE_NUMBER = 0;
     private static final Integer DEFAULT_PAGE_SIZE = 25;
-    public static final String API_URL = "/api/v1/customers/";
+    public static final String API_URL = "/api/v1/customers";
 
     private final CustomerService customerService;
 
