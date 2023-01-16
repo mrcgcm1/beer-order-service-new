@@ -10,7 +10,7 @@
 
     <groupId>com.marco</groupId>
     <artifactId>beer-order-service-new</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>beer-order-service-new</name>
     <description>Service per la gestione degli ordini</description>
     <dependencies>
