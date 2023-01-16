@@ -5,7 +5,7 @@
     <parent>
         <artifactId>beer-service-bom-new</artifactId>
         <groupId>com.marco</groupId>
-        <version>1.0.5</version>
+        <version>1.0.8</version>
     </parent>
 
     <groupId>com.marco</groupId>
@@ -18,13 +18,13 @@
         <dependency>
             <groupId>com.marco</groupId>
             <artifactId>dto-common-interface</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.0.1</version>
         </dependency>
-        <dependency>
+  <!--      <dependency>
             <groupId>org.apache.activemq</groupId>
             <artifactId>artemis-jms-server</artifactId>
             <scope>test</scope>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
